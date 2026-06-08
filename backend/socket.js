@@ -4,11 +4,18 @@ const userSocketMap = new Map();
 
 module.exports = {
   init: (httpServer) => {
-    const { Server } = require('socket.io');
+    const allowedOrigins = [
+      'http://localhost:3000',
+      'https://resource-renting-web.vercel.app',
+      'https://resource-renting-web.vercel.app/',
+      process.env.FRONTEND_URL
+    ].filter(Boolean);
+
     io = new Server(httpServer, {
       cors: {
-        origin: "*",
-        methods: ["GET", "POST"]
+        origin: allowedOrigins,
+        methods: ["GET", "POST"],
+        credentials: true
       }
     });
 
