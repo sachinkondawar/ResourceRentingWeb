@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Search, MapPin, SlidersHorizontal, Star, Loader } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import api from '../services/api';
@@ -48,11 +48,11 @@ const Explore = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [locationQuery, setLocationQuery] = useState('');
 
-  const fetchItems = async () => {
+  const fetchItems = useCallback(async (search = '', location = '') => {
     setLoading(true);
     try {
       const response = await api.get('/items', {
-        params: { search: searchQuery, location: locationQuery }
+        params: { search, location }
       });
       setItems(response.data);
     } catch (error) {
@@ -60,14 +60,14 @@ const Explore = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
   useEffect(() => {
     fetchItems();
-  }, []); // Initial load
+  }, [fetchItems]); // Initial load
 
   const handleSearch = () => {
-    fetchItems();
+    fetchItems(searchQuery, locationQuery);
   };
 
   return (

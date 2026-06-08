@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Calendar, Search, Filter, CheckCircle, XCircle, RotateCcw } from 'lucide-react';
+import React, { useState, useEffect, useCallback } from 'react';
+import { Calendar, Search, CheckCircle, XCircle, RotateCcw } from 'lucide-react';
 import api from '../../services/api';
 import { useSocket } from '../../context/SocketContext';
 
@@ -9,7 +9,7 @@ const ManageBookings = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const { addToast } = useSocket();
 
-  const fetchBookings = async () => {
+  const fetchBookings = useCallback(async () => {
     setLoading(true);
     try {
       const response = await api.get('/bookings');
@@ -20,11 +20,11 @@ const ManageBookings = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [addToast]);
 
   useEffect(() => {
     fetchBookings();
-  }, []);
+  }, [fetchBookings]);
 
   const handleUpdateStatus = async (id, status) => {
     try {

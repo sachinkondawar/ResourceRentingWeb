@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { DollarSign, CheckCircle, XCircle, Search, Loader, RotateCcw } from 'lucide-react';
+import React, { useState, useEffect, useCallback } from 'react';
+import { CheckCircle, XCircle, Search, RotateCcw } from 'lucide-react';
 import api from '../../services/api';
 import { useSocket } from '../../context/SocketContext';
 
@@ -9,7 +9,7 @@ const Payments = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const { addToast } = useSocket();
 
-  const fetchBookings = async () => {
+  const fetchBookings = useCallback(async () => {
     setLoading(true);
     try {
       const response = await api.get('/bookings');
@@ -20,11 +20,11 @@ const Payments = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [addToast]);
 
   useEffect(() => {
     fetchBookings();
-  }, []);
+  }, [fetchBookings]);
 
   const handleUpdatePayment = async (id, paymentStatus) => {
     try {

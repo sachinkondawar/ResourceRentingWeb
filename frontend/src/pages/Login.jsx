@@ -66,7 +66,7 @@ const Login = () => {
           <div className="input-group">
             <div className="flex justify-between items-center">
               <label className="input-label">Password</label>
-              <a href="#" style={{ fontSize: '0.85rem' }}>Forgot password?</a>
+              <button type="button" onClick={(e) => { e.preventDefault(); alert('Password reset is not implemented yet.'); }} style={{ background: 'none', border: 'none', padding: 0, color: 'var(--primary)', cursor: 'pointer', fontSize: '0.85rem', textDecoration: 'underline' }}>Forgot password?</button>
             </div>
             <div style={{ position: 'relative' }}>
               <Lock size={18} style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} />

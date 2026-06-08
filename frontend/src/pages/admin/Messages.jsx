@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { MessageSquare, Send, User as UserIcon, Loader } from 'lucide-react';
+import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
+import { MessageSquare, Send, Loader } from 'lucide-react';
 import api from '../../services/api';
 import { useSocket } from '../../context/SocketContext';
 
@@ -12,15 +12,17 @@ const Messages = () => {
   const messagesEndRef = useRef(null);
   const { socket, addToast } = useSocket();
 
-  const storedUser = localStorage.getItem('user');
-  const currentUser = storedUser ? JSON.parse(storedUser) : null;
+  const currentUser = useMemo(() => {
+    const storedUser = localStorage.getItem('user');
+    return storedUser ? JSON.parse(storedUser) : null;
+  }, []);
   const currentUserId = currentUser?.id || currentUser?._id;
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
-  const fetchMessages = async () => {
+  const fetchMessages = useCallback(async () => {
     if (!currentUserId) {
       setLoading(false);
       return;
@@ -58,11 +60,11 @@ const Messages = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [currentUserId]);
 
   useEffect(() => {
     fetchMessages();
-  }, []);
+  }, [fetchMessages]);
 
   useEffect(() => {
     if (!socket || !currentUserId) return;
@@ -73,7 +75,6 @@ const Messages = () => {
       // Update contacts if new message comes from a new user
       setContacts((prevContacts) => {
         const senderId = msg.sender?._id || msg.sender;
-        const receiverId = msg.receiver?._id || msg.receiver;
         const otherUser = senderId === currentUserId ? msg.receiver : msg.sender;
         
         if (otherUser && (otherUser._id || typeof otherUser === 'string')) {

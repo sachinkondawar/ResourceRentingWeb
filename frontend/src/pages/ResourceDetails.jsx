@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { Star, MapPin, ShieldCheck, Clock, CheckCircle, Loader } from 'lucide-react';
+import { Star, MapPin, ShieldCheck, Clock, Loader } from 'lucide-react';
 import api from '../services/api';
 import { useSocket } from '../context/SocketContext';
 

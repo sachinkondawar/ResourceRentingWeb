@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Users, Package, CalendarCheck, DollarSign, TrendingUp, Loader, FileText, Calendar } from 'lucide-react';
 import api from '../../services/api';
 import { useSocket } from '../../context/SocketContext';
@@ -32,7 +32,7 @@ const AdminDashboard = () => {
 
   const user = JSON.parse(localStorage.getItem('user'));
 
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     setLoading(true);
     try {
       const [metricsRes, recentRes] = await Promise.all([
@@ -47,11 +47,11 @@ const AdminDashboard = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [addToast]);
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [fetchData]);
 
   const generateReport = async () => {
     try {

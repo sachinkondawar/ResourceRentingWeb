@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Calendar, CheckCircle, Clock, Loader, Star, X, FileText, MapPin, ReceiptText } from 'lucide-react';
+import { Calendar, Loader, Star, X, ReceiptText } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import api from '../services/api';
 import { useSocket } from '../context/SocketContext';

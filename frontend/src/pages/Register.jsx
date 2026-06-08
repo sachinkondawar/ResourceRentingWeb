@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Mail, Lock, User as UserIcon, Phone, AlertCircle, Shield } from 'lucide-react';
+import { Mail, Lock, User as UserIcon, Phone, AlertCircle } from 'lucide-react';
 import api from '../services/api';
 
 const Register = () => {

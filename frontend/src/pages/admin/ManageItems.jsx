@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Plus, Edit, Trash2, Search, Filter, Loader, Image as ImageIcon, X } from 'lucide-react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { Plus, Edit, Trash2, Loader, Image as ImageIcon, X } from 'lucide-react';
 import api from '../../services/api';
 import { useSocket } from '../../context/SocketContext';
 
@@ -24,7 +24,7 @@ const ManageItems = () => {
     status: 'Available'
   });
 
-  const fetchItems = async () => {
+  const fetchItems = useCallback(async () => {
     setLoading(true);
     try {
       const response = await api.get('/items');
@@ -35,11 +35,11 @@ const ManageItems = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [addToast]);
 
   useEffect(() => {
     fetchItems();
-  }, []);
+  }, [fetchItems]);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });

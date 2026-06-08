@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import { Send, User as UserIcon, Phone, Video, MoreVertical, Loader } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import api from '../services/api';
@@ -14,15 +14,17 @@ const Chat = () => {
   const messagesEndRef = useRef(null);
   const { socket, addToast } = useSocket();
 
-  const storedUser = localStorage.getItem('user');
-  const currentUser = storedUser ? JSON.parse(storedUser) : null;
+  const currentUser = useMemo(() => {
+    const storedUser = localStorage.getItem('user');
+    return storedUser ? JSON.parse(storedUser) : null;
+  }, []);
   const currentUserId = currentUser?.id || currentUser?._id;
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
-  const fetchMessages = async (contact = adminContact) => {
+  const fetchMessages = useCallback(async (contact) => {
     if (!currentUserId || !contact?._id) return;
 
     try {
@@ -44,7 +46,7 @@ const Chat = () => {
       console.error('Failed to fetch messages', fetchError);
       setError(fetchError.response?.data?.message || 'Failed to load messages.');
     }
-  };
+  }, [currentUserId]);
 
   useEffect(() => {
     if (!currentUser) {
@@ -72,7 +74,7 @@ const Chat = () => {
     };
 
     initChat();
-  }, []);
+  }, [currentUser, fetchMessages]);
 
   useEffect(() => {
     if (!adminContact || !socket) return;

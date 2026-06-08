@@ -16,10 +16,10 @@ const Footer = () => {
             The premium platform to rent tools, electronics, and everyday items. Sustainable, affordable, and easy.
           </p>
           <div className="social-links">
-            <a href="#" className="social-icon"><Globe size={20} /></a>
-            <a href="#" className="social-icon"><Mail size={20} /></a>
-            <a href="#" className="social-icon"><MessageCircle size={20} /></a>
-            <a href="#" className="social-icon"><Share2 size={20} /></a>
+            <a href="https://rentify.example.com" target="_blank" rel="noopener noreferrer" className="social-icon"><Globe size={20} /></a>
+            <a href="mailto:support@rentify.example.com" className="social-icon"><Mail size={20} /></a>
+            <a href="https://wa.me/1234567890" target="_blank" rel="noopener noreferrer" className="social-icon"><MessageCircle size={20} /></a>
+            <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="social-icon"><Share2 size={20} /></a>
           </div>
         </div>
 
