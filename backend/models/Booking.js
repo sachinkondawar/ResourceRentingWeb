@@ -7,7 +7,8 @@ const bookingSchema = new mongoose.Schema({
   endDate: { type: Date, required: true },
   totalAmount: { type: Number, required: true },
   status: { type: String, enum: ['Pending', 'Active', 'Completed', 'Cancelled'], default: 'Pending' },
-  paymentStatus: { type: String, enum: ['Pending', 'Paid', 'Refunded'], default: 'Pending' }
+  paymentStatus: { type: String, enum: ['Pending', 'Paid', 'Refunded'], default: 'Pending' },
+  paymentMethod: { type: String, enum: ['Online', 'COD'], default: 'Online' }
 }, { timestamps: true });
 
 module.exports = mongoose.model('Booking', bookingSchema);

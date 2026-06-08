@@ -14,6 +14,7 @@ const messageRoutes = require('./routes/messageRoutes');
 const uploadRoutes = require('./routes/uploadRoutes');
 const reviewRoutes = require('./routes/reviewRoutes');
 const notificationRoutes = require('./routes/notificationRoutes');
+const paymentRoutes = require('./routes/paymentRoutes');
 const http = require('http');
 const socketHandler = require('./socket');
 
@@ -34,6 +35,7 @@ app.use('/api/messages', messageRoutes);
 app.use('/api/upload', uploadRoutes); // Added
 app.use('/api/reviews', reviewRoutes); // Added
 app.use('/api/notifications', notificationRoutes); // Added Notification route
+app.use('/api/payment', paymentRoutes); // Added Payment route
 
 // Database connection
 mongoose.connect(process.env.MONGO_URI)

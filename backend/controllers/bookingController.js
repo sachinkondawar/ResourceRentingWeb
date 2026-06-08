@@ -9,7 +9,7 @@ const socketHandler = require('../socket');
 // @access  Private (User)
 exports.createBooking = async (req, res) => {
   try {
-    const { itemId, startDate, endDate, totalAmount } = req.body;
+    const { itemId, startDate, endDate, totalAmount, paymentMethod } = req.body;
 
     // Check item availability
     const item = await Item.findById(itemId);
@@ -22,7 +22,8 @@ exports.createBooking = async (req, res) => {
       item: itemId,
       startDate,
       endDate,
-      totalAmount
+      totalAmount,
+      paymentMethod: paymentMethod || 'Online'
     });
 
     await booking.save();
